@@ -15,32 +15,33 @@ function App() {
     if (!inputValue) return;
 
     console.log(inputValue);
-    //axios.patch()
+    axios.patch('http://localhost:5000/update/', {text: inputValue},
+    {headers:{id:_id}})
   };
 
   const Delete = (_id) => {
     console.log(_id);
-    // axios.delete();
+    axios.delete('http://localhost:5000/delete/', {headers:{id:_id}});
   };
 
   const Add = () => {
     console.log(addTodo);
-    // axios.post();
+    axios.post('http://localhost:5000/add/', {text: addTodo});
   };
 
   const toggleDone = (_id, isDone) => {
-    console.log(_id, isDone);
-    //axios.patch()
+    console.log(_id, !isDone);
+    axios.patch('http://localhost:5000/checked/', {isDone: !isDone},
+    {headers:{id:_id}})
   };
 
   useEffect(() => {
-    // axios
-    //   .get("Your backend URL")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     setList(data.data);
-    //   });
+    axios
+      .get('http://localhost:5000/list/')
+      .then((data) => {
+        console.log(data.data);
+        setList(data.data);
+      });
   }, []);
 
   return (
